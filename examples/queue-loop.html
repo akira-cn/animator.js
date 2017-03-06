@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test</title>
+</head>
+<style>
+  #block{
+    position:absolute;
+    left: 150px;
+    top: 100px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #0c8;
+    line-height: 50px;
+    text-align: center;
+  }
+</style>
+<body>
+  <h2>Circle</h2>
+  <div id="block">click</div>
+  <script src="/static/js/animator-dev.js"></script>
+  <script>
+  var a1 = new Animator(1000,  function(p){
+    var tx = 100 * p;
+    block.style.transform = 'translateX(' 
+      + tx + 'px)';     
+  });
+
+  var a2 = new Animator(1000,  function(p){
+    var ty = 100 * p;
+    block.style.transform = 'translate(100px,' 
+      + ty + 'px)';     
+  });
+
+  var a3 = new Animator(1000,  function(p){
+    var tx = 100 * (1-p);
+    block.style.transform = 'translate(' 
+      + tx + 'px, 100px)';     
+  });
+
+  var a4 = new Animator(1000,  function(p){
+    var ty = 100 * (1-p);
+    block.style.transform = 'translateY('  
+      + ty + 'px)';     
+  });
+
+
+  block.addEventListener('click', async function(){
+    while(1){
+      await a1.animate();
+      await a2.animate();
+      await a3.animate();
+      await a4.animate();
+    }
+  });
+  </script>
+</body>
+
+</html>
