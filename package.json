@@ -1,6 +1,6 @@
 {
   "name": "animator.js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A small (1.6kb compressed and 1.1kb gziped!) high-performance animation library. Provide promise-based API.",
   "main": "index.js",
   "scripts": {

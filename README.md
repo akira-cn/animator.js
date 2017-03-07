@@ -9,8 +9,7 @@ Provide promise-based API.
 In a browser:
 
 ```html
-<script src="https://s4.ssl.qhres.com/!2fb39e02/animator-0.1.0.min.js"></script>
-
+<script src="https://s1.ssl.qhres.com/!bd39e7fb/animator-0.2.0.min.js"></script>
 ```
 
 ## API
@@ -58,6 +57,29 @@ block.addEventListener('click', async function(){
 ### animate()
 
 Start the animation and return a promise.
+
+### ease(easing)
+
+Return a new animation with a new easing.
+
+```js
+var easeInOutBack = BezierEasing(0.68, -0.55, 0.265, 1.55);
+//easeInOutBack
+
+var a1 = new Animator(2000, function(ep,p){
+  var x = 200 * ep;
+
+  block.style.transform = 'translateX(' + x + 'px)';
+}, easeInOutBack);
+
+var a2 = a1.ease(p => easeInOutBack(1 - p)); //reverse a1
+
+block.addEventListener('click', async function(){
+  await a1.animate();
+  await a2.animate();
+});
+
+```
 
 ### cancel()
 
