@@ -10,7 +10,7 @@ module.exports = {
     filename: `animator-dev.js`,
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/static/js/',
-    library: "Animator",
+    library: 'Animator',
     libraryTarget: 'umd'
   },
 
