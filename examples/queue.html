@@ -18,7 +18,7 @@
   }
 </style>
 <body>
-  <h2>Queue Loop</h2>
+  <h2>Queue</h2>
   <div id="block">click</div>
   <script src="/static/js/animator-dev.js"></script>
   <script>
@@ -46,14 +46,11 @@
       + ty + 'px)';     
   });
 
-
   block.addEventListener('click', async function(){
-    while(1){
-      await a1.animate();
-      await a2.animate();
-      await a3.animate();
-      await a4.animate();
-    }
+    let continued = await a1.animate();
+        continued = await a2.animate(continued);
+        continued = await a3.animate(continued);
+        continued = await a4.animate(continued);
   });
   </script>
 </body>
