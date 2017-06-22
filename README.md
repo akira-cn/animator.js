@@ -1,6 +1,6 @@
 # Animator
 
-A small (1.6kb compressed and 1.1kb gziped!) high-performance animation library. 
+A mini (1.6kb compressed and 1.1kb gziped!) high-performance animation library. 
 
 Provide promise-based API.
 
