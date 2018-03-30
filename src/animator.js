@@ -9,7 +9,8 @@ function nowtime() {
 
 if(typeof global.requestAnimationFrame === 'undefined') {
   global.requestAnimationFrame = function (callback) {
-    return setTimeout(function () { // polyfill
+    return setTimeout(function () {
+      // polyfill
       callback.call(this, nowtime())
     }, 1000 / 60)
   }

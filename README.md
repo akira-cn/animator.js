@@ -9,7 +9,7 @@ Provide promise-based API.
 In a browser:
 
 ```html
-<script src="https://s5.ssl.qhres.com/!fd9cabc8/animator-0.3.2.js"></script>
+<script src="https://s3.ssl.qhres.com/!ed7dc4fe/animator-0.3.2.js"></script>
 ```
 
 ## API
