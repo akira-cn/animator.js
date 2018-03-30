@@ -8,7 +8,7 @@
     "lint": "eslint 'lib/**/*.js' --fix",
     "start": "webpack-dev-server --quiet --port 9090 & http-server -c-1 -p 9091 examples",
     "compile": "rm -rf lib/* && babel src -d lib --watch",
-    "build": "node ./scripts/build.js"
+    "prepublishOnly": "rm -rf lib/* && babel src -d lib && node ./scripts/build.js"
   },
   "keywords": [
     "javascript",
@@ -19,18 +19,20 @@
   "author": "akira-cn",
   "license": "MIT",
   "dependencies": {
-    "babel-runtime": "^6.26.0"
+    "babel-runtime": "^6.26.0",
+    "fast-animation-frame": "^0.2.0"
   },
   "devDependencies": {
-    "http-server": "^0.9.0",
-    "eslint": "^4.17.0",
-    "eslint-config-75team": "^1.0.2",
-    "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.24.0",
     "babel-eslint": "^8.1.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.3.2",
-    "babel-loader": "^6.4.1"
+    "eslint": "^4.17.0",
+    "eslint-config-75team": "^1.0.2",
+    "http-server": "^0.9.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
   }
 }

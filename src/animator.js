@@ -18,39 +18,7 @@ if(typeof global.requestAnimationFrame === 'undefined') {
   }
 }
 
-const FrameManager = {
-  steps: new Set(),
-  add(step) {
-    const steps = this.steps,
-      timerId = this.timerId
-    if(steps.has(step)) {
-      return false
-    }
-    steps.add(step)
-    const that = this
-    if(timerId == null) {
-      this.timerId = requestAnimationFrame(function step(t) {
-        [...steps].forEach((step) => {
-          if(step(t)) {
-            steps.delete(step)
-          }
-        })
-        if(steps.size) {
-          requestAnimationFrame(step)
-        } else {
-          that.timerId = null
-        }
-      })
-    }
-  },
-  remove(step) {
-    const steps = this.steps
-    if(steps.has(step)) {
-      steps.delete(step)
-    }
-  },
-  timerId: null,
-}
+const {requestAnimationFrame, cancelAnimationFrame} = require('fast-animation-frame')
 
 class Animator {
   constructor(duration, update, easing) {
@@ -67,6 +35,7 @@ class Animator {
       self = this
 
     return new Promise(((resolve, reject) => {
+      let qId = 0
       function step(timestamp) {
         startTime = startTime || timestamp
         const p = Math.min(1.0, (timestamp - startTime) / duration)
@@ -74,20 +43,18 @@ class Animator {
         update.call(self, easing ? easing(p) : p, p)
 
         if(p < 1.0) {
-          return false
+          qId = requestAnimationFrame(step)
+        } else {
+          resolve(startTime + duration)
         }
-
-        resolve(startTime + duration)
-        return true
       }
 
-      FrameManager.add(step)
-
       self.cancel = function () {
-        FrameManager.remove(step)
+        cancelAnimationFrame(qId)
         update.call(self, 0, 0)
         resolve(startTime + duration)
       }
+      qId = requestAnimationFrame(step)
     }))
   }
   ease(easing) {

@@ -1,44 +1,61 @@
-const path = require('path')
-const fs = require('fs')
+module.exports = function (env = {}) {
+  const webpack = require('webpack'),
+    path = require('path'),
+    fs = require('fs'),
+    packageConf = JSON.parse(fs.readFileSync('package.json', 'utf-8'))
 
-const jsLoaders = []
-if(fs.existsSync('./.babelrc')) {
-  // use babel
-  const babelConf = JSON.parse(fs.readFileSync('.babelrc'))
-  jsLoaders.push({
-    loader: 'babel-loader',
-    options: babelConf,
-  })
-}
+  const version = packageConf.version,
+    proxyPort = 9091,
+    plugins = [],
+    jsLoaders = []
 
-module.exports = {
-  entry: './src/animator.js',
-  output: {
-    filename: 'animator-dev.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/static/js/',
-    library: 'Animator',
-    libraryTarget: 'umd',
-  },
-  module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /(node_modules|bower_components)/,
-      use: jsLoaders,
-    }],
-  },
-  plugins: [
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false,
-    //     drop_console: false,
-    //   }
-    // })
-  ],
+  if(env.production) {
+    // compress js in production environment
 
-  devServer: {
-    proxy: {
-      '*': 'http://127.0.0.1:9091',
+    // plugins.push(
+    //   new webpack.optimize.UglifyJsPlugin({
+    //     compress: {
+    //       warnings: false,
+    //       drop_console: false
+    //     }
+    //   })
+    // )
+  }
+
+  if(fs.existsSync('./.babelrc')) {
+    // use babel
+    const babelConf = JSON.parse(fs.readFileSync('.babelrc'))
+    jsLoaders.push({
+      loader: 'babel-loader',
+      options: babelConf
+    })
+  }
+
+  return {
+    entry: './src/animator.js',
+    output: {
+      filename: env.production ? `animator-${version}.js` : 'animator-dev.js',
+      path: path.resolve(__dirname, 'dist'),
+      publicPath: '/static/js/',
+      library: 'Animator',
+      libraryTarget: 'umd'
     },
-  },
+
+    plugins,
+
+    module: {
+      rules: [{
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: jsLoaders
+      }]
+    },
+
+    devServer: {
+      proxy: {
+        '*': `http://127.0.0.1:${proxyPort}`
+      }
+    },
+    //devtool: 'inline-source-map',
+  }
 }
