@@ -1,11 +1,12 @@
 {
-  "name": "animator.js",
-  "version": "0.3.1",
-  "description": "A small (1.6kb compressed and 1.1kb gziped!) high-performance animation library. Provide promise-based API.",
-  "main": "lib/animator.js",
+  "name": "fast-animation-frame",
+  "version": "0.1.0",
+  "description": "Cross-platform requestAnimationFrame. Super fast.",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --quiet & http-server -c-1 -p 8360",
+    "lint": "eslint 'lib/**/*.js' --fix",
+    "compile": "rm -rf lib/* && babel src -d lib --watch",
     "build": "node ./scripts/build.js"
   },
   "keywords": [
@@ -16,9 +17,15 @@
   ],
   "author": "akira-cn",
   "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.26.0"
+  },
   "devDependencies": {
-    "http-server": "^0.9.0",
-    "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.24.0",
+    "babel-eslint": "^8.1.1",
+    "babel-preset-env": "^1.3.2",
+    "eslint": "^4.17.0",
+    "eslint-config-75team": "^1.0.2"
   }
 }
