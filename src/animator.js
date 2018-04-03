@@ -1,24 +1,3 @@
-function nowtime() {
-  /* eslint-disable no-undef */
-  if(typeof performance !== 'undefined' && performance.now) {
-    return performance.now()
-  }
-  /* eslint-enable no-undef */
-  return Date.now ? Date.now() : (new Date()).getTime()
-}
-
-if(typeof global.requestAnimationFrame === 'undefined') {
-  global.requestAnimationFrame = function (callback) {
-    return setTimeout(function () {
-      // polyfill
-      callback.call(this, nowtime())
-    }, 1000 / 60)
-  }
-  global.cancelAnimationFrame = function (qId) {
-    return clearTimeout(qId)
-  }
-}
-
 const {requestAnimationFrame, cancelAnimationFrame} = require('fast-animation-frame')
 
 class Animator {
